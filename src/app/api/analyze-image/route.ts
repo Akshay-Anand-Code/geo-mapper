@@ -6,7 +6,7 @@ import { Client } from '@googlemaps/google-maps-services-js';
 const visionClient = new vision.ImageAnnotatorClient({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.split('\\n').join('\n'),
     project_id: process.env.GOOGLE_PROJECT_ID,
   }
 });
@@ -114,11 +114,12 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error analyzing image:', error);
+    console.error('Full error:', JSON.stringify(error, null, 2));
     return NextResponse.json(
       { 
         error: 'Failed to analyze image',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
+        fullError: process.env.NODE_ENV === 'development' ? error : undefined
       },
       { status: 500 }
     );

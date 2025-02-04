@@ -2,20 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import vision from '@google-cloud/vision';
 import { Client } from '@googlemaps/google-maps-services-js';
 
-// Initialize the Vision client with credentials from env
-const visionClient = new vision.ImageAnnotatorClient({
-  credentials: {
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.split('\\n').join('\n'),
-    project_id: process.env.GOOGLE_PROJECT_ID,
-  }
-});
-
-// Initialize Google Maps client
-const mapsClient = new Client({});
-
+// Move client initialization inside the POST handler
 export async function POST(req: NextRequest) {
   try {
+    // Initialize the Vision client with credentials from env
+    const visionClient = new vision.ImageAnnotatorClient({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        project_id: process.env.GOOGLE_PROJECT_ID,
+      }
+    });
+
+    // Initialize Google Maps client
+    const mapsClient = new Client({});
+
+    // Validate environment variables
+    if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY || !process.env.GOOGLE_PROJECT_ID) {
+      throw new Error('Missing required Google Cloud credentials');
+    }
+
     const formData = await req.formData();
     const file = formData.get('image') as File;
     
@@ -114,12 +120,11 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Full error:', JSON.stringify(error, null, 2));
+    console.error('Error analyzing image:', error);
     return NextResponse.json(
       { 
         error: 'Failed to analyze image',
-        details: error instanceof Error ? error.message : 'Unknown error',
-        fullError: process.env.NODE_ENV === 'development' ? error : undefined
+        details: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
     );

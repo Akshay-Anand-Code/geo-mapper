@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/vision": "^4.3.2",
     "@googlemaps/google-maps-services-js": "^3.4.0",
+    "@googlemaps/js-api-loader": "^1.16.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Camera, Globe, ArrowRight, Code, Shield, Database, Image, Send, MapPin } from 'lucide-react';
-import { Loader } from '@googlemaps/js-api-loader';
+import { Camera, Globe, ArrowRight, Code, Shield, Database, Image as ImageIcon, Send, MapPin } from 'lucide-react';import { Loader } from '@googlemaps/js-api-loader';
+import Image from 'next/image';
 
 interface Message {
   id: number;
@@ -17,6 +17,14 @@ interface Message {
   timestamp?: Date;
 }
 
+interface LocationInfo {
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+    };
+  }
+
 const ModernUI = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -29,7 +37,9 @@ const ModernUI = () => {
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [locationInfo, setLocationInfo] = useState<any>(null);
+  const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null);
+
+
 
   const handleSendMessage = () => {
     if (inputText.trim()) {
@@ -136,7 +146,7 @@ const ModernUI = () => {
     }
   }, [locationInfo]);
 
-  const showLocationOnMap = async (locationInfo: any) => {
+  const showLocationOnMap = async (locationInfo: LocationInfo)  => {
     if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
       console.error('Google Maps API key is not defined');
       return;
@@ -263,11 +273,13 @@ const ModernUI = () => {
                     }`}
                   >
                     {message.image && (
-                      <img
-                        src={message.image}
-                        alt="Uploaded location"
-                        className="max-w-full rounded-lg mb-2"
-                      />
+                      <Image
+                      src={message.image}
+                      alt="Uploaded location"
+                      width={400}
+                      height={300}
+                      className="max-w-full rounded-lg mb-2"
+                    />
                     )}
                     <p>{message.content}</p>
                     {message.location && (
@@ -307,7 +319,7 @@ const ModernUI = () => {
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <label className="p-2 hover:bg-[#2C3444] rounded-lg transition-colors cursor-pointer">
-                  <Image className="w-5 h-5 text-gray-400" />
+                <ImageIcon className="w-5 h-5 text-gray-400" />
                   <input
                     type="file"
                     accept="image/*"

@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Add this if you're using Next.js Image optimization
+[[redirects]]
+  from = "/_next/image*"
+  to = "/.netlify/images"
+  status = 200 

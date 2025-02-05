@@ -97,7 +97,7 @@ const CompanyPage = () => {
           Join Us in Shaping the Future
         </h2>
         <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-          We're always looking for talented individuals who share our passion for advancing AI technology and making it accessible to everyone.
+          We&apos;re always looking for talented individuals who share our passion for advancing AI technology and making it accessible to everyone.
         </p>
         <Link 
           href="/contact" 

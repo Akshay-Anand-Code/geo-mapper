@@ -30,8 +30,6 @@ interface AddressButtonProps {
 }
 
 const AddressButton = ({ address }: AddressButtonProps) => {
-  const [showCopied, setShowCopied] = useState(false);
-
   const shortenAddress = (addr: string) => {
     if (addr.length <= 8) return addr;
     return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
@@ -42,24 +40,16 @@ const AddressButton = ({ address }: AddressButtonProps) => {
       <button 
         onClick={() => {
           navigator.clipboard.writeText(address);
-          setShowCopied(true);
-          setTimeout(() => setShowCopied(false), 2000);
         }}
         className="px-4 py-2 bg-gradient-to-r from-[#1A1F2A] to-[#252B38] text-white rounded-lg hover:from-[#252B38] hover:to-[#303844] transition-all"
       >
         {shortenAddress(address)}
       </button>
-      {showCopied && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-sm rounded">
-          Copied!
-        </div>
-      )}
     </div>
   );
 };
 
 const ModernUI = () => {
-  const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -71,7 +61,6 @@ const ModernUI = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null);
-  const [showCopied, setShowCopied] = useState(false);
 
   const handleSendMessage = () => {
     if (inputText.trim()) {
@@ -351,13 +340,7 @@ const ModernUI = () => {
               {/* Input Area */}
               <div className="p-4 border-t border-gray-800/50">
                 <div
-                  className={`flex items-center gap-2 p-3 rounded-xl border transition-all duration-300 ${
-                    isHovered
-                      ? 'border-purple-400/50 bg-gradient-to-r from-[#252B38] to-[#2C3444]'
-                      : 'border-gray-700/50 bg-gradient-to-r from-[#1A1F2A] to-[#252B38]'
-                  }`}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
+                  className={`flex items-center gap-2 p-3 rounded-xl border transition-all duration-300`}
                 >
                   <label className="p-2 hover:bg-[#2C3444] rounded-lg transition-colors cursor-pointer">
                   <ImageIcon className="w-5 h-5 text-gray-400" />

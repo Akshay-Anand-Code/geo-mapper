@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Brain, Cpu, Network, Lock, Eye, Terminal, Database, Radio, Fingerprint, Scan, Binary, Radar } from 'lucide-react';
-import Link from 'next/link';
 
 const HowItWorksPage = () => {
   const technologies = [

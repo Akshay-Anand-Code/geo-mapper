@@ -24,7 +24,7 @@ const CompanyPage = () => {
     {
       icon: <Microscope className="w-8 h-8" />,
       title: "Research & Development",
-      description: "Continuous investment in cutting-edge research to push the boundaries of what's possible in AI technology."
+      description: "Continuous investment in cutting-edge research to push the boundaries of what&apos;s possible in AI technology."
     }
   ];
 
@@ -39,7 +39,7 @@ const CompanyPage = () => {
               Advancing the Future of Intelligence
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              We're on a mission to democratize advanced AI technology through groundbreaking research and development in machine learning, neural networks, and privacy-preserving computation.
+              We&apos;re on a mission to democratize advanced AI technology through groundbreaking research and development in machine learning, neural networks, and privacy-preserving computation.
             </p>
           </div>
         </div>

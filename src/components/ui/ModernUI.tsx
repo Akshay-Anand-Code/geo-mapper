@@ -283,11 +283,16 @@ const ModernUI = () => {
           </p>
           <div className="flex items-center justify-center gap-4 mb-8">
             <button className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-lg transition-all">
-              Get Started for Free
+              Locate it
             </button>
-            <button className="px-6 py-3 bg-gradient-to-r from-[#1A1F2A] to-[#252B38] hover:from-[#252B38] hover:to-[#303844] rounded-lg transition-all">
-              Book A Demo
-            </button>
+            <a 
+              href="/how-it-works"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-gradient-to-r from-[#1A1F2A] to-[#252B38] hover:from-[#252B38] hover:to-[#303844] rounded-lg transition-all cursor-pointer"
+            >
+              Phase 2
+            </a>
           </div>
           <div className="text-gray-400 flex items-center justify-center gap-2">
             <Camera className="w-4 h-4" />

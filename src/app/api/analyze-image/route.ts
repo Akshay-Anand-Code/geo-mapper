@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
         project_id: process.env.GOOGLE_PROJECT_ID,
       }
     });
+    console.log('Vision client initialized successfully');
 
     // Initialize Google Maps client
     const mapsClient = new Client({});

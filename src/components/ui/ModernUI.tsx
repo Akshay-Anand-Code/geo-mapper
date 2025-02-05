@@ -25,6 +25,39 @@ interface LocationInfo {
     };
   }
 
+interface AddressButtonProps {
+  address: string;
+}
+
+const AddressButton = ({ address }: AddressButtonProps) => {
+  const [showCopied, setShowCopied] = useState(false);
+
+  const shortenAddress = (addr: string) => {
+    if (addr.length <= 8) return addr;
+    return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  };
+
+  return (
+    <div className="relative">
+      <button 
+        onClick={() => {
+          navigator.clipboard.writeText(address);
+          setShowCopied(true);
+          setTimeout(() => setShowCopied(false), 2000);
+        }}
+        className="px-4 py-2 bg-gradient-to-r from-[#1A1F2A] to-[#252B38] text-white rounded-lg hover:from-[#252B38] hover:to-[#303844] transition-all"
+      >
+        {shortenAddress(address)}
+      </button>
+      {showCopied && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-sm rounded">
+          Copied!
+        </div>
+      )}
+    </div>
+  );
+};
+
 const ModernUI = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -38,8 +71,7 @@ const ModernUI = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null);
-
-
+  const [showCopied, setShowCopied] = useState(false);
 
   const handleSendMessage = () => {
     if (inputText.trim()) {
@@ -209,13 +241,18 @@ const ModernUI = () => {
             <span className="text-xl font-semibold">Jack</span>
           </div>
           <div className="flex items-center gap-8">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Company</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Product</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Tools</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Blog</a>
-            <button className="px-4 py-2 bg-gradient-to-r from-[#1A1F2A] to-[#252B38] text-white rounded-lg hover:from-[#252B38] hover:to-[#303844] transition-all">
-              Start For Free
-            </button>
+            <a href="#" className="text-gray-400 hover:text-white transition-colors">Twitter</a>
+            <a href="#" className="text-gray-400 hover:text-white transition-colors">Telegram</a>
+            <a href="#" className="text-gray-400 hover:text-white transition-colors">Pump.fun</a>
+            <a 
+              href="/how-it-works" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              How It Works
+            </a>
+            <AddressButton address="G72qGbUGfsd8pKVgX7kzrouWUmoVfCa39bn5eYcZFqq2" />
           </div>
         </nav>
 
@@ -224,7 +261,7 @@ const ModernUI = () => {
           <div className="inline-block text-sm text-purple-400 mb-4 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-sm" />
             <a href="#" className="relative flex items-center gap-2 hover:text-purple-300 transition-colors">
-              Build for data wizard <ArrowRight className="w-4 h-4" />
+              Built for cyberpunk detectives <ArrowRight className="w-4 h-4" />
             </a>
           </div>
           <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-purple-200">
@@ -250,102 +287,107 @@ const ModernUI = () => {
 
         {/* Chat Interface */}
         <div className="max-w-4xl mx-auto mb-24">
-          <div className="bg-gradient-to-b from-[#1A1F2A] to-[#1E242E] rounded-xl shadow-xl overflow-hidden border border-gray-800/50">
-            {/* Window Controls */}
-            <div className="flex gap-2 p-4 border-b border-gray-800/50">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            </div>
-            
-            {/* Messages Area */}
-            <div className="h-[400px] overflow-y-auto p-4 space-y-4">
-              {messages.map(message => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+          <div className="relative group">
+            {/* Double-layer glow effect for chat interface */}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 rounded-xl blur-[5px] opacity-30 group-hover:opacity-70 transition duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 rounded-xl blur-[20px] opacity-20 group-hover:opacity-40 transition duration-500" />
+            <div className="relative bg-gradient-to-b from-[#1A1F2A] to-[#1E242E] rounded-xl shadow-xl overflow-hidden border border-purple-500/20">
+              {/* Window Controls */}
+              <div className="flex gap-2 p-4 border-b border-gray-800/50">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              
+              {/* Messages Area */}
+              <div className="h-[400px] overflow-y-auto p-4 space-y-4">
+                {messages.map(message => (
                   <div
-                    className={`max-w-[80%] rounded-2xl p-4 ${
-                      message.type === 'user'
-                        ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white'
-                        : 'bg-gradient-to-r from-[#252B38] to-[#2C3444] text-gray-100'
-                    }`}
+                    key={message.id}
+                    className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    {message.image && (
-                      <Image
-                      src={message.image}
-                      alt="Uploaded location"
-                      width={400}
-                      height={300}
-                      className="max-w-full rounded-lg mb-2"
-                    />
-                    )}
-                    <p>{message.content}</p>
-                    {message.location && (
-                      <div className="mt-2 flex items-center gap-2 text-sm text-gray-300">
-                        <MapPin className="w-4 h-4" />
-                        <span>{message.location.name}</span>
-                      </div>
-                    )}
-                    <span className="text-xs opacity-70 mt-2 block">
-                      {message.timestamp?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-gradient-to-r from-[#252B38] to-[#2C3444] rounded-2xl p-4">
-                    <div className="flex gap-2">
-                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
-                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                    <div
+                      className={`max-w-[80%] rounded-2xl p-4 ${
+                        message.type === 'user'
+                          ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white'
+                          : 'bg-gradient-to-r from-[#252B38] to-[#2C3444] text-gray-100'
+                      }`}
+                    >
+                      {message.image && (
+                        <Image
+                        src={message.image}
+                        alt="Uploaded location"
+                        width={400}
+                        height={300}
+                        className="max-w-full rounded-lg mb-2"
+                      />
+                      )}
+                      <p>{message.content}</p>
+                      {message.location && (
+                        <div className="mt-2 flex items-center gap-2 text-sm text-gray-300">
+                          <MapPin className="w-4 h-4" />
+                          <span>{message.location.name}</span>
+                        </div>
+                      )}
+                      <span className="text-xs opacity-70 mt-2 block">
+                        {message.timestamp?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                ))}
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-gradient-to-r from-[#252B38] to-[#2C3444] rounded-2xl p-4">
+                      <div className="flex gap-2">
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
 
-            {/* Input Area */}
-            <div className="p-4 border-t border-gray-800/50">
-              <div
-                className={`flex items-center gap-2 p-3 rounded-xl border transition-all duration-300 ${
-                  isHovered
-                    ? 'border-purple-400/50 bg-gradient-to-r from-[#252B38] to-[#2C3444]'
-                    : 'border-gray-700/50 bg-gradient-to-r from-[#1A1F2A] to-[#252B38]'
-                }`}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <label className="p-2 hover:bg-[#2C3444] rounded-lg transition-colors cursor-pointer">
-                <ImageIcon className="w-5 h-5 text-gray-400" />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </label>
-                <input
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your message here..."
-                  className="flex-1 bg-transparent outline-none text-gray-100 placeholder-gray-500"
-                />
-                <button
-                  onClick={handleSendMessage}
-                  className={`p-2 rounded-lg transition-all ${
-                    inputText.trim() 
-                      ? 'bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700'
-                      : 'bg-gradient-to-r from-gray-700 to-gray-600 cursor-not-allowed'
+              {/* Input Area */}
+              <div className="p-4 border-t border-gray-800/50">
+                <div
+                  className={`flex items-center gap-2 p-3 rounded-xl border transition-all duration-300 ${
+                    isHovered
+                      ? 'border-purple-400/50 bg-gradient-to-r from-[#252B38] to-[#2C3444]'
+                      : 'border-gray-700/50 bg-gradient-to-r from-[#1A1F2A] to-[#252B38]'
                   }`}
-                  disabled={!inputText.trim()}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
                 >
-                  <Send className="w-5 h-5 text-white" />
-                </button>
+                  <label className="p-2 hover:bg-[#2C3444] rounded-lg transition-colors cursor-pointer">
+                  <ImageIcon className="w-5 h-5 text-gray-400" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Type your message here..."
+                    className="flex-1 bg-transparent outline-none text-gray-100 placeholder-gray-500"
+                  />
+                  <button
+                    onClick={handleSendMessage}
+                    className={`p-2 rounded-lg transition-all ${
+                      inputText.trim() 
+                        ? 'bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700'
+                        : 'bg-gradient-to-r from-gray-700 to-gray-600 cursor-not-allowed'
+                    }`}
+                    disabled={!inputText.trim()}
+                  >
+                    <Send className="w-5 h-5 text-white" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -370,8 +412,7 @@ const ModernUI = () => {
               description: 'Process millions of locations in real-time'
             }
           ].map((feature) => (
-            <div key={feature.title} className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-xl blur-xl group-hover:opacity-100 opacity-0 transition-opacity" />
+            <div key={feature.title} className="relative">
               <div className="relative bg-gradient-to-br from-[#1A1F2A] to-[#252B38] p-6 rounded-xl hover:shadow-lg transition-all duration-300 border border-gray-800/50">
                 <div className="text-purple-400 mb-4">{feature.icon}</div>
                 <h3 className="font-semibold mb-2">{feature.title}</h3>

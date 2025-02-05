@@ -247,7 +247,7 @@ const ModernUI = () => {
               Telegram
             </a>
             <a 
-              href="https://pump.fun" 
+              href="https://pump.fun/coin/6BvUM3ephxUg19W7Fk6bDmdfouM2htb35V7NGj6Qpump?coin_sort=market_cap&origin=search_bar"
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-white transition-colors"

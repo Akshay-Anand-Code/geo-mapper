@@ -227,12 +227,33 @@ const ModernUI = () => {
         <nav className="flex items-center justify-between p-6">
           <div className="flex items-center gap-2">
             <Globe className="w-6 h-6 text-purple-400" />
-            <span className="text-xl font-semibold">Jack</span>
+            <span className="text-xl font-semibold">Geo AI</span>
           </div>
           <div className="flex items-center gap-8">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Twitter</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Telegram</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Pump.fun</a>
+            <a 
+              href="https://x.com/GEOAiSol"
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              Twitter
+            </a>
+            <a 
+              href="https://t.me/GEOaiportal"
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              Telegram
+            </a>
+            <a 
+              href="https://pump.fun" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              Pump.fun
+            </a>
             <a 
               href="/how-it-works" 
               target="_blank" 
@@ -241,7 +262,7 @@ const ModernUI = () => {
             >
               How It Works
             </a>
-            <AddressButton address="G72qGbUGfsd8pKVgX7kzrouWUmoVfCa39bn5eYcZFqq2" />
+            <AddressButton address="Coming Soon" />
           </div>
         </nav>
 
@@ -270,7 +291,7 @@ const ModernUI = () => {
           </div>
           <div className="text-gray-400 flex items-center justify-center gap-2">
             <Camera className="w-4 h-4" />
-            <span>No Credit or Debit Card Required</span>
+            <span>Upload your image to know the location</span>
           </div>
         </div>
 

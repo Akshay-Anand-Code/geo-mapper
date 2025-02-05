@@ -262,7 +262,7 @@ const ModernUI = () => {
             >
               How It Works
             </a>
-            <AddressButton address="Coming Soon" />
+            <AddressButton address="6BvUM3ephxUg19W7Fk6bDmdfouM2htb35V7NGj6Qpump" />
           </div>
         </nav>
 

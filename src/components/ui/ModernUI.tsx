@@ -231,7 +231,7 @@ const ModernUI = () => {
           </div>
           <div className="flex items-center gap-8">
             <a 
-              href="https://x.com/GEOAiSol"
+              href=""
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-white transition-colors"
@@ -239,7 +239,7 @@ const ModernUI = () => {
               Twitter
             </a>
             <a 
-              href="https://t.me/GEOaiportal"
+              href=""
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-white transition-colors"
@@ -247,7 +247,7 @@ const ModernUI = () => {
               Telegram
             </a>
             <a 
-              href="https://pump.fun/coin/6BvUM3ephxUg19W7Fk6bDmdfouM2htb35V7NGj6Qpump?coin_sort=market_cap&origin=search_bar"
+              href=""
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-white transition-colors"
@@ -262,7 +262,7 @@ const ModernUI = () => {
             >
               How It Works
             </a>
-            <AddressButton address="6BvUM3ephxUg19W7Fk6bDmdfouM2htb35V7NGj6Qpump" />
+            <AddressButton address="" />
           </div>
         </nav>
 
